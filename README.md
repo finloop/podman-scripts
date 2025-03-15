@@ -4,9 +4,22 @@ Scripts that make dealing with podman quadlets a tad easier.
 
 ## Installation
 
+1. Make sure that you've added `~/.local/bin` to PATH. 
+Add this line to `.zshrc` or `.bashrc`.
+
+```sh
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+2. Clone this repository:
+
+```sh
+git clone https://github.com/finloop/podman-scripts.git
+cd podman-scripts
+make install
+```
 
 ## Usage
-
 
 ### pods
 
