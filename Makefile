@@ -13,14 +13,5 @@ $(dest_files):
 
 install: $(dest_files)
 
-ensurepath:
-ifneq (,$(findstring .local/bin,$$PATH))
-	echo "Found ~/.local.bin in PATH. Skipping..."
-else
-	@echo Hello wroldd
-	@echo $(tmp)
-endif
-
-
 clean:
 	rm -f $(dest_files)
