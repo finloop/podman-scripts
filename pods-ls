@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source pods-env
+
 usage() {
   cat << EOF
 Usage: $(basename "${BASH_SOURCE[0]}") [-c] [c] [container] [-v] [v] [volume]
@@ -43,9 +45,9 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [[ -z $EXTENSION ]]; then
-  tree --prune ~/.config/containers/systemd
+  tree -P "*.volume" -P "*.container" -P "*.kube" -P "*.pod" -P "*.network" -P "*.build" -P "*.image" --prune $UNITS_PATH
 else
-  tree -P "*.$EXTENSION" --prune ~/.config/containers/systemd
+  tree -P "*.$EXTENSION" --prune $UNITS_PATH
 fi
 
 

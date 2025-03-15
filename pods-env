@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export UNITS_PATH="$HOME/.config/containers/systemd"
+

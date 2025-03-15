@@ -1,0 +1,68 @@
+#!/bin/bash
+
+source pods-env
+shopt -s nullglob
+
+usage() {
+  cat << EOF
+Usage: $(basename "${BASH_SOURCE[0]}") [-c] [c] [container] [-v] [v] [volume]
+
+Pull images from all *.container and *.image units.
+
+Available options:
+
+-h, --help	Show help
+--all		Pull all images from containers and images from 
+		default podman-systemd path in home directory.	
+EOF
+  exit
+}
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -h|--help)
+      usage
+      shift
+      exit 0
+      ;;
+   --all)
+      SEARCH_PATH=$UNITS_PATH
+      shift
+      ;;
+   -*|--*)
+      echo "Unknown option $1"
+      exit 1
+      ;;
+    *)
+      shift # past argument
+      ;;
+  esac
+done
+
+IMAGES=($(grep --include='*.image' --include='*.container' -r "Image=" $SEARCH_PATH | awk '{split($0,a,"="); print a[2]}'))
+
+
+if [[ ! ${IMAGES[@]} ]]
+then
+  echo "No images to pull. Exiting..."
+  exit 0
+else
+    echo "Array is not empty"
+fi
+
+echo "Images to pull:"
+for image in "${IMAGES[@]}"; do
+  echo "	"$image""
+done
+
+read -r -p "Are you sure? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
+then
+  for image in "${IMAGES[@]}"; do
+    podman pull "$image"
+  done
+else
+  echo "No images to pull. Exiting..."
+  exit 0
+fi
+

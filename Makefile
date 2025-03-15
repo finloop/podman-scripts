@@ -1,7 +1,7 @@
 # Please read before changing anything
 # https://makefiletutorial.com/
 
-files := pods pods-ls
+files := pods pods-ls pods-env pods-pull
 dest_loc := $$HOME/.local/bin/
 dest_files := $(addprefix $(dest_loc), $(files))
 tmp := echo 'export PATH="$$PATH:$$HOME/.local/bin"' >> $$HOME/.zshrc

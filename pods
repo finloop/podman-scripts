@@ -28,8 +28,9 @@ while [[ $# -gt 0 ]]; do
       pods-ls "$@"
       break
       ;;
-    up)
+    pull)
       shift # past argument
+      pods-pull "$@"
       break
       ;;
     -*|--*)
