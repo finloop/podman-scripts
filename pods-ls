@@ -1,0 +1,51 @@
+#!/bin/bash
+
+usage() {
+  cat << EOF
+Usage: $(basename "${BASH_SOURCE[0]}") [-c] [c] [container] [-v] [v] [volume]
+
+List quadlet config files.
+
+Available options:
+
+-h, --help      	Show help
+-v, v, volume		List quadlet volumes
+-c, c, container	List quadlet containers
+EOF
+  exit
+}
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -h|--help)
+      usage
+      shift
+      exit 0
+      ;;
+    -c|c|container)
+      EXTENSION="container"
+      shift # past argument
+      break
+      ;;
+    -v|v|volume)
+      EXTENSION="volume"
+      shift # past argument
+      break
+      ;;
+    -*|--*)
+      echo "Unknown option $1"
+      exit 1
+      ;;
+    *)
+      shift # past argument
+      ;;
+  esac
+done
+
+if [[ -z $EXTENSION ]]; then
+  tree --prune ~/.config/containers/systemd
+else
+  tree -P "*.$EXTENSION" --prune ~/.config/containers/systemd
+fi
+
+

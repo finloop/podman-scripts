@@ -1,0 +1,45 @@
+#!/bin/bash
+
+usage() {
+  cat << EOF
+Usage: $(basename "${BASH_SOURCE[0]}") [-h] command 
+Podman scripts for quadlet management.
+
+Available options:
+
+-h, --help              Show help
+
+Commands:
+  ls	List quadlet config files
+
+EOF
+  exit
+}
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -h|--help)
+      usage
+      shift
+      exit 0
+      ;;
+    ls)
+      shift # past argument
+      pods-ls "$@"
+      break
+      ;;
+    up)
+      shift # past argument
+      break
+      ;;
+    -*|--*)
+      echo "Unknown command $1"
+      exit 1
+      ;;
+    *)
+      shift # past argument
+      ;;
+  esac
+done
+
+
