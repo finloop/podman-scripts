@@ -10,7 +10,8 @@ Available options:
 -h, --help              Show help
 
 Commands:
-  ls	List quadlet config files
+  ls	List quadlet systemd units
+  pull	Pull images from systemd units
 
 EOF
   exit
